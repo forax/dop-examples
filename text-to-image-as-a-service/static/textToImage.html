@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script>
+window.onload = async () => {
+  let textInput = document.getElementById("text");
+  let engineSelect = document.getElementById("engine");
+  let sizeSelect = document.getElementById("size");
+  let plmsCheckbox = document.getElementById("plms");
+  let button = document.getElementById("button");
+  let resultTable = document.getElementById("result");
+
+  async function refresh() {
+    let response = await fetch("/api/invoice", { method: 'GET' });
+    let invoices = await response.json();
+    resultTable.innerHTML = "<tr><th>user name</th><th>message</th><th>price</th></tr>";
+    for(let invoice of invoices) {
+      let tr = document.createElement("tr");
+      for (let field of ["userName", "message", "price"]) {
+        let td = document.createElement("td");
+        td.innerHTML = invoice[field];
+        tr.append(td);
+      }
+      resultTable.append(tr);
+    }
+  }
+  refresh();
+
+  let action = async () => {
+    let text = textInput.value;
+    if (text == "") {
+      return;
+    }
+    let textToImageRequest = {
+      user: "user",
+      text: text,
+      imageSize: sizeSelect.value,
+      plms: plmsCheckbox.checked
+    };
+    let engine = engineSelect.value;
+    let response = await fetch("/api/" + engine, {
+          method: 'POST',
+          body: JSON.stringify(textToImageRequest),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+    await response.json();
+    //textInput.value = "";
+    refresh();
+  };
+  button.onclick = action;
+  textInput.onchange = action;
+};
+    </script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <input id="text" type="text" placeholder="Type a text here">
+        <select id="engine">
+            <option value="dalle">DALL-E</option>
+            <option value="sd">Stable Diffusion</option>
+        </select>
+        <select id="size">
+            <option value="small">512 x 512</option>
+            <option value="medium">1024 x 1024</option>
+            <option value="big">2048 x 2038</option>
+        </select>
+        <input type="checkbox" id="plms" name="plms">
+        <button id="button">Text To Image</button>
+    </div>
+    <table id="result">
+    </table>
+</body>
+</html>
