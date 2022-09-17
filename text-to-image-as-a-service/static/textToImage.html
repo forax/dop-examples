@@ -9,6 +9,7 @@ window.onload = async () => {
   let sizeSelect = document.getElementById("size");
   let plmsCheckbox = document.getElementById("plms");
   let button = document.getElementById("button");
+  let imageImg = document.getElementById("image");
   let resultTable = document.getElementById("result");
 
   async function refresh() {
@@ -27,7 +28,7 @@ window.onload = async () => {
   }
   refresh();
 
-  let action = async () => {
+  button.onclick = async () => {
     let text = textInput.value;
     if (text == "") {
       return;
@@ -46,12 +47,11 @@ window.onload = async () => {
             'Content-Type': 'application/json'
           }
         });
-    await response.json();
+    var result = await response.json();
+    imageImg.src = result.imagePath;
     //textInput.value = "";
     refresh();
   };
-  button.onclick = action;
-  textInput.onchange = action;
 };
     </script>
     <style>
@@ -59,6 +59,13 @@ window.onload = async () => {
     </style>
 </head>
 <body>
+    <h2>Text to Image As a service</h2>
+
+    <p>
+        Type a text like "couple as picasso" or "unicorn as picasso" and click on <tt>Text to Image</tt>
+        to generate the corresponding image.
+    </p>
+
     <div id="container">
         <input id="text" type="text" placeholder="Type a text here">
         <select id="engine">
@@ -73,6 +80,11 @@ window.onload = async () => {
         <input type="checkbox" id="plms" name="plms">
         <button id="button">Text To Image</button>
     </div>
+
+    <h2>Image</h2>
+    <img id="image" src="" width=512 height=512></img>
+
+    <h2>Billing</h2>
     <table id="result">
     </table>
 </body>
