@@ -1,6 +1,7 @@
 package com.github.forax.dop;
 
 import java.net.URI;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 
 import static com.github.forax.dop.Data3.ImageSize.*;
@@ -21,7 +22,7 @@ public interface Data3 {
 
   record DalleImageRequest(String user, String text, ImageSize imageSize) {}
   record SDImageRequest(String user, String text, ImageSize imageSize, boolean plms) {}
-  record ImageResponse(URI imageURI) {}
+  record ImageResponse(String imagePath) {}
 
   record InvoiceResponse(String userName, String message, int price, LocalDateTime dateTime) {}
 

@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-/*
-@RestController
+
+//@RestController
 @RequestMapping("/api")
 public class TextToImageAPI1 {
   private final InvoiceRepository invoiceRepository;
@@ -40,9 +40,9 @@ public class TextToImageAPI1 {
     var invoice = new Invoice(user, text, price, LocalDateTime.now());
     invoiceRepository.save(invoice);
 
-    var imageURI = Engines.dall_e(text, imageSize.size(), imageSize.size());
+    var imagePath = Engines.dall_e(text, imageSize.size(), imageSize.size());
 
-    return new ImageResponse(imageURI);
+    return new ImageResponse(imagePath);
   }
 
   @PostMapping(path="/sd", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
@@ -63,9 +63,9 @@ public class TextToImageAPI1 {
     var invoice = new Invoice(user, text, price, LocalDateTime.now());
     invoiceRepository.save(invoice);
 
-    var imageURI = Engines.stable_diffusion(text, imageSize.size(), imageSize.size(), plms);
+    var imagePath = Engines.stable_diffusion(text, imageSize.size(), imageSize.size(), plms);
 
-    return new ImageResponse(imageURI);
+    return new ImageResponse(imagePath);
   }
 
 
@@ -76,4 +76,4 @@ public class TextToImageAPI1 {
         .map(invoice -> new InvoiceResponse(invoice.userName, invoice.message, invoice.price, invoice.dateTime))
         .toList();
   }
-}*/
+}

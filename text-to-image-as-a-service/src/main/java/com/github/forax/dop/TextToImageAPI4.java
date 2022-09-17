@@ -1,6 +1,5 @@
 package com.github.forax.dop;
 
-import com.github.forax.dop.Data4.*;
 import static com.github.forax.dop.Data4.*;
 
 import com.github.forax.dop.db.Invoice;
@@ -51,9 +50,9 @@ public class TextToImageAPI4 {
     var invoice = new Invoice(user, text, price, LocalDateTime.now());
     invoiceRepository.save(invoice);
 
-    var imageURI = imageToText(text, parameter);
+    var imagePath = imageToText(text, parameter);
 
-    return new ImageResponse(imageURI);
+    return new ImageResponse(imagePath);
   }
 
   @GetMapping(path= "/invoice", produces = APPLICATION_JSON_VALUE)
