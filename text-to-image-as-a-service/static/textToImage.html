@@ -47,7 +47,7 @@ window.onload = async () => {
             'Content-Type': 'application/json'
           }
         });
-    var result = await response.json();
+    let result = await response.json();
     imageImg.src = result.imagePath;
     //textInput.value = "";
     refresh();
