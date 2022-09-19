@@ -235,4 +235,4 @@ private ImageResponse createImage(ImageRequest imageRequest) {
   ...
 ```
 
-Conclusion: __records are the data and pattern matching in methods computations__
+Conclusion: __record is data and pattern matching is computation__
