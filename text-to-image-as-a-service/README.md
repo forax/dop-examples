@@ -38,7 +38,7 @@ Note: The fact that all data definitions are in one file
 is nice for a tutorial, everything is one place, but do not do that in production.
 
 
-## TextToImageAPI1 + Data1
+## TextToImageAPI1 + [Data1](src/main/java/com/github/forax/dop/Data1.java)
 
 Goal
 - Use records to model the inputs and outputs of the REST endpoints
@@ -66,7 +66,7 @@ record InvoiceResponse(String userName, String message, int price, LocalDateTime
 Conclusion: __Use records to model the inputs and outputs of the REST endpoints__
 
 
-## TextToImageAPI2 + Data2
+## TextToImageAPI2 + [Data2](src/main/java/com/github/forax/dop/Data2.java)
 
 Goal
 - extract the algorithm that compute the price from the controller
@@ -107,7 +107,7 @@ Note: we use '__' here to indicate that the value is unused, in the future (Java
 Conclusion: __use pattern matching to define functions over the records__
 
 
-## TextToImageAPI3 + Data3
+## TextToImageAPI3 + [Data3](src/main/java/com/github/forax/dop/Data3.java)
 
 Goal
 - apply the data oriented programmation technics (exhaustive switch, record patterns)
@@ -186,7 +186,7 @@ For example, in the second line, `when` has access to the local variables `size`
 
 Conclusion: __DOP = no default in switch + use record patterns to assert the shape__
 
-## TextToImageAPI4 + Data4
+## TextToImageAPI4 + [Data4](src/main/java/com/github/forax/dop/Data4.java)
 
 Goal
 - Share the code between the DALL-E endpoint and the Stable Diffusion endpoint 
@@ -217,7 +217,7 @@ static String imageToText(String text, EngineParameter engineParameter) {
 ```
 
 And to extract the `user` and `text` from both the `ImageRequest`, a simple solution
-is to declare the (virtual) accessor in the interface.
+is to declare the (virtual) accessors in the interface.
 
 ```java
 private ImageResponse createImage(ImageRequest imageRequest) {
