@@ -28,22 +28,21 @@ public interface Data2 {
   record DalleEngineParameter(ImageSize imageSize) implements EngineParameter {}
   record SDEngineParameter(ImageSize imageSize, boolean plms) implements EngineParameter {}
 
-  static int imagePrice(ImageSize size) {
+  private static int imagePrice(ImageSize size) {
     return switch(size) {
       case small -> 125;
       case medium -> 400;
       case big -> 800;
     };
   }
-
-  static int plmsPrice(boolean plms) {
+  private static int plmsPrice(boolean plms) {
     return plms? 25: 0;
   }
 
   static int price(EngineParameter engineParameter) {
     return switch (engineParameter) {
-      case DalleEngineParameter(ImageSize __) -> 1_000;
-      case SDEngineParameter(ImageSize size, boolean plms) -> imagePrice(size) + plmsPrice(plms);
+      case DalleEngineParameter __ -> 1_000;
+      case SDEngineParameter parameter -> imagePrice(parameter.imageSize()) + plmsPrice(parameter.plms());
       default -> throw new IllegalStateException("Unexpected value: " + engineParameter);
     };
   }

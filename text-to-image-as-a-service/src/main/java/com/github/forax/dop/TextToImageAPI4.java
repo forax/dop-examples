@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@RestController
+@RestController  // uncomment and comment the RestController annotation of the other TextToImageAPI?
 @RequestMapping("/api")
 public class TextToImageAPI4 {
   private final InvoiceRepository invoiceRepository;

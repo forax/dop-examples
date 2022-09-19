@@ -19,12 +19,6 @@ public interface Data4 {
     }
   }
 
-  sealed interface ImageRequest {
-    String user();
-    String text();
-  }
-  record DalleImageRequest(String user, String text, ImageSize imageSize) implements ImageRequest {}
-  record SDImageRequest(String user, String text, ImageSize imageSize, boolean plms) implements ImageRequest {}
   record ImageResponse(String imagePath) {}
 
   record InvoiceResponse(String userName, String message, int price, LocalDateTime dateTime) {}
@@ -33,22 +27,30 @@ public interface Data4 {
   record DalleEngineParameter(ImageSize imageSize) implements EngineParameter {}
   record SDEngineParameter(ImageSize imageSize, boolean plms) implements EngineParameter {}
 
-  static EngineParameter parameter(ImageRequest imageRequest) {
-    return switch (imageRequest) {
-      case DalleImageRequest request -> new DalleEngineParameter(request.imageSize());
-      case SDImageRequest request -> new SDEngineParameter(request.imageSize(), request.plms());
-    };
-  }
 
   static int price(EngineParameter engineParameter) {
     return switch (engineParameter) {
-      case DalleEngineParameter(ImageSize __) -> 1_000;
+      case DalleEngineParameter parameter -> 1_000;
       case SDEngineParameter(ImageSize size, boolean plms) when size == small && !plms -> 125;
       case SDEngineParameter(ImageSize size, boolean plms) when size == small -> 150;
       case SDEngineParameter(ImageSize size, boolean plms) when size == medium && !plms -> 400;
       case SDEngineParameter(ImageSize size, boolean plms) when size == medium -> 425;
       case SDEngineParameter(ImageSize size, boolean plms) when size == big && !plms -> 800;
       case SDEngineParameter(ImageSize _1, boolean _2) -> 825;
+    };
+  }
+
+  sealed interface ImageRequest {
+    String user();
+    String text();
+  }
+  record DalleImageRequest(String user, String text, ImageSize imageSize) implements ImageRequest {}
+  record SDImageRequest(String user, String text, ImageSize imageSize, boolean plms) implements ImageRequest {}
+
+  static EngineParameter parameter(ImageRequest imageRequest) {
+    return switch (imageRequest) {
+      case DalleImageRequest request -> new DalleEngineParameter(request.imageSize());
+      case SDImageRequest request -> new SDEngineParameter(request.imageSize(), request.plms());
     };
   }
 

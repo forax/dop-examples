@@ -42,7 +42,17 @@ public interface Data3 {
   static int plmsPrice(boolean plms) {
     return plms? 25: 0;
   }
+  */
 
+  /*
+  static int price(EngineParameter engineParameter) {
+    return switch (engineParameter) {
+      case DalleEngineParameter parameter -> 1_000;
+      case SDEngineParameter(ImageSize size, boolean plms) -> imagePrice(size) + plmsPrice(plms);
+    };
+  }*/
+
+  /*
   static int price(EngineParameter engineParameter) {
     return switch (engineParameter) {
       case DalleEngineParameter(ImageSize __) -> 1_000;
@@ -53,15 +63,17 @@ public interface Data3 {
   /*
   static int price(EngineParameter engineParameter) {
     return switch (engineParameter) {
-      case DalleEngineParameter(ImageSize imageSize) -> 1_000;
+      case DalleEngineParameter(ImageSize __) -> 1_000;
       case SDEngineParameter(ImageSize size, boolean plms) when size == small && !plms -> 125;
       case SDEngineParameter(ImageSize size, boolean plms) when size == small && plms -> 150;
       case SDEngineParameter(ImageSize size, boolean plms) when size == medium && !plms -> 400;
       case SDEngineParameter(ImageSize size, boolean plms) when size == medium && plms -> 425;
       case SDEngineParameter(ImageSize size, boolean plms) when size == big && !plms -> 800;
       case SDEngineParameter(ImageSize size, boolean plms) when size == big && plms -> 825;
+      default -> throw new IllegalStateException("Unexpected value: " + engineParameter);
     };
   }*/
+
 
   static int price(EngineParameter engineParameter) {
     return switch (engineParameter) {

@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-//@RestController
+//@RestController // uncomment and comment the RestController annotation of the other TextToImageAPI?
 @RequestMapping("/api")
 public class TextToImageAPI1 {
   private final InvoiceRepository invoiceRepository;
@@ -45,6 +45,17 @@ public class TextToImageAPI1 {
     return new ImageResponse(imagePath);
   }
 
+  private static int imagePrice(ImageSize size) {
+    return switch(size) {
+      case small -> 125;
+      case medium -> 400;
+      case big -> 800;
+    };
+  }
+  private static int plmsPrice(boolean plms) {
+    return plms? 25: 0;
+  }
+
   @PostMapping(path="/sd", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
   @Transactional
   @Operation(summary = "create an image using stable diffusion")
@@ -54,11 +65,7 @@ public class TextToImageAPI1 {
     var imageSize = imageRequest.imageSize();
     var plms = imageRequest.plms();
 
-    var price = (plms? 25 : 0) + switch(imageSize) {
-      case small -> 125;
-      case medium -> 400;
-      case big -> 800;
-    };
+    var price = imagePrice(imageSize) + plmsPrice(plms);
 
     var invoice = new Invoice(user, text, price, LocalDateTime.now());
     invoiceRepository.save(invoice);

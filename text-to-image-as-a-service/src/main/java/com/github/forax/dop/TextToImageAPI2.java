@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-//@RestController
+//@RestController  // uncomment and comment the RestController annotation of the other TextToImageAPI?
 @RequestMapping("/api")
 public class TextToImageAPI2 {
   private final InvoiceRepository invoiceRepository;
@@ -35,7 +35,7 @@ public class TextToImageAPI2 {
     var imageSize = imageRequest.imageSize();
 
     var parameter = new DalleEngineParameter(imageSize);
-    var price = Data2.price(parameter);
+    var price = price(parameter);
 
     var invoice = new Invoice(user, text, price, LocalDateTime.now());
     invoiceRepository.save(invoice);
