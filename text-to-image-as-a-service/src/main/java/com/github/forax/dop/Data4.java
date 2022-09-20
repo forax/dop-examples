@@ -40,6 +40,19 @@ public interface Data4 {
     };
   }
 
+  /*
+  static int price(EngineParameter engineParameter) {
+    return switch (engineParameter) {
+      case DalleEngineParameter(var __) -> 1_000;
+      case SDEngineParameter(var size, var plms) when size == small && !plms -> 125;
+      case SDEngineParameter(var size, var plms) when size == small -> 150;
+      case SDEngineParameter(var size, var plms) when size == medium && !plms -> 400;
+      case SDEngineParameter(var size, var plms) when size == medium -> 425;
+      case SDEngineParameter(var size, var plms) when size == big && !plms -> 800;
+      case SDEngineParameter(var _1, var _2) -> 825;
+    };
+  }*/
+
   sealed interface ImageRequest {
     String user();
     String text();

@@ -184,6 +184,24 @@ static int price(EngineParameter engineParameter) {
 You can notice that the guard has access to the `bindings` created by the `Record Pattern`.
 For example, in the second line, `when` has access to the local variables `size` and `plms`.
 
+The code can be simplified a big, using `var` to declare the types inside the record patterns
+instead to declaring the types explicitly.
+
+```java
+static int price(EngineParameter engineParameter) {
+  return switch (engineParameter) {
+    case DalleEngineParameter(var __) -> 1_000;
+    case SDEngineParameter(var size, var plms) when size == small && !plms -> 125;
+    case SDEngineParameter(var size, var plms) when size == small -> 150;
+    case SDEngineParameter(var size, var plms) when size == medium && !plms -> 400;
+    case SDEngineParameter(var size, var plms) when size == medium -> 425;
+    case SDEngineParameter(var size, var plms) when size == big && !plms -> 800;
+    case SDEngineParameter(var _1, var _2) -> 825;
+  };
+}
+```
+Note: at the time of the writing, IntelliJ does not support `var` inside the record pattern.
+
 Conclusion: __DOP = no default in switch + use record patterns to assert the shape__
 
 ## TextToImageAPI4 + [Data4](src/main/java/com/github/forax/dop/Data4.java)

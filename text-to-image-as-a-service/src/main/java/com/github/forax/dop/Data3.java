@@ -74,7 +74,6 @@ public interface Data3 {
     };
   }*/
 
-
   static int price(EngineParameter engineParameter) {
     return switch (engineParameter) {
       case DalleEngineParameter(ImageSize __) -> 1_000;
@@ -86,4 +85,17 @@ public interface Data3 {
       case SDEngineParameter(ImageSize _1, boolean _2) -> 825;
     };
   }
+
+  /* Not yet supported by IntelliJ
+  static int price(EngineParameter engineParameter) {
+    return switch (engineParameter) {
+      case DalleEngineParameter(var __) -> 1_000;
+      case SDEngineParameter(var size, var plms) when size == small && !plms -> 125;
+      case SDEngineParameter(var size, var plms) when size == small -> 150;
+      case SDEngineParameter(var size, var plms) when size == medium && !plms -> 400;
+      case SDEngineParameter(var size, var plms) when size == medium -> 425;
+      case SDEngineParameter(var size, var plms) when size == big && !plms -> 800;
+      case SDEngineParameter(var _1, var _2) -> 825;
+    };
+  }*/
 }
