@@ -7,4 +7,3 @@ Data Oriented Programming Examples
   https://www.parisjug.org/xwiki/wiki/oldversion/view/Meeting/20220927
 
 
-
