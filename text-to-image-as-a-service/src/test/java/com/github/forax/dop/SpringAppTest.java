@@ -32,6 +32,6 @@ public class SpringAppTest {
 				.andExpect(handler().methodName("getAllInvoices"))
 				.andExpect(status().isOk())
 				.andExpect(content()
-						.json("[ 1 ]"));
+						.json("[ ]"));
 	}
 }
