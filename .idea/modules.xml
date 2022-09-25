@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/dop-examples.iml" filepath="$PROJECT_DIR$/.idea/dop-examples.iml" />
       <module fileurl="file://$PROJECT_DIR$/text-to-image-as-a-service/text-to-image-as-a-service.iml" filepath="$PROJECT_DIR$/text-to-image-as-a-service/text-to-image-as-a-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/text-to-image-as-a-service-virtual-thread/text-to-image-as-a-service-virtual-thread.iml" filepath="$PROJECT_DIR$/text-to-image-as-a-service-virtual-thread/text-to-image-as-a-service-virtual-thread.iml" />
     </modules>
   </component>
 </project>

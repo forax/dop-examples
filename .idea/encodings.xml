@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/text-to-image-as-a-service-virtual-thread/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/text-to-image-as-a-service-virtual-thread/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/text-to-image-as-a-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/text-to-image-as-a-service/src/main/resources" charset="UTF-8" />
   </component>
