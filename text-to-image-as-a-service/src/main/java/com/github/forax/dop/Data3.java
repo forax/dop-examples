@@ -27,7 +27,7 @@ public interface Data3 {
   record InvoiceResponse(String userName, String message, int price, LocalDateTime dateTime) {}
 
   sealed interface EngineParameter /*permits DalleEngineParameter, SDEngineParameter*/ {}
-  record DalleEngineParameter(ImageSize imageSize) implements EngineParameter {}
+  record DalleEngineParameter() implements EngineParameter {}
   record SDEngineParameter(ImageSize imageSize, boolean plms) implements EngineParameter {}
 
   /*
@@ -76,7 +76,7 @@ public interface Data3 {
 
   static int price(EngineParameter engineParameter) {
     return switch (engineParameter) {
-      case DalleEngineParameter(ImageSize __) -> 1_000;
+      case DalleEngineParameter() -> 1_000;
       case SDEngineParameter(ImageSize size, boolean plms) when size == small && !plms -> 125;
       case SDEngineParameter(ImageSize size, boolean plms) when size == small -> 150;
       case SDEngineParameter(ImageSize size, boolean plms) when size == medium && !plms -> 400;

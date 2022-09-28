@@ -30,7 +30,7 @@ public interface Data4 {
 
   static int price(EngineParameter engineParameter) {
     return switch (engineParameter) {
-      case DalleEngineParameter parameter -> 1_000;
+      case DalleEngineParameter(ImageSize __)  -> 1_000;
       case SDEngineParameter(ImageSize size, boolean plms) when size == small && !plms -> 125;
       case SDEngineParameter(ImageSize size, boolean plms) when size == small -> 150;
       case SDEngineParameter(ImageSize size, boolean plms) when size == medium && !plms -> 400;
@@ -43,7 +43,7 @@ public interface Data4 {
   /*
   static int price(EngineParameter engineParameter) {
     return switch (engineParameter) {
-      case DalleEngineParameter(var __) -> 1_000;
+      case DalleEngineParameter(var imageSize) -> 1_000;
       case SDEngineParameter(var size, var plms) when size == small && !plms -> 125;
       case SDEngineParameter(var size, var plms) when size == small -> 150;
       case SDEngineParameter(var size, var plms) when size == medium && !plms -> 400;
@@ -52,6 +52,13 @@ public interface Data4 {
       case SDEngineParameter(var _1, var _2) -> 825;
     };
   }*/
+
+  static String imageToText(String text, EngineParameter engineParameter) {
+    return switch (engineParameter) {
+      case DalleEngineParameter(ImageSize imageSize) -> Engines.dall_e(text, imageSize.size(), imageSize.size());
+      case SDEngineParameter(ImageSize imageSize, boolean plms) -> Engines.stable_diffusion(text, imageSize.size(), imageSize.size(), plms);
+    };
+  }
 
   sealed interface ImageRequest {
     String user();
@@ -64,13 +71,6 @@ public interface Data4 {
     return switch (imageRequest) {
       case DalleImageRequest request -> new DalleEngineParameter(request.imageSize());
       case SDImageRequest request -> new SDEngineParameter(request.imageSize(), request.plms());
-    };
-  }
-
-  static String imageToText(String text, EngineParameter engineParameter) {
-    return switch (engineParameter) {
-      case DalleEngineParameter(ImageSize imageSize) -> Engines.dall_e(text, imageSize.size(), imageSize.size());
-      case SDEngineParameter(ImageSize imageSize, boolean plms) -> Engines.stable_diffusion(text, imageSize.size(), imageSize.size(), plms);
     };
   }
 }

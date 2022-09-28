@@ -75,7 +75,7 @@ The price depends on the parameters of the algorithm used, so we model
 the parameters as records
 
 ```java
-record DalleEngineParameter(ImageSize imageSize) {}
+record DalleEngineParameter() {}
 record SDEngineParameter(ImageSize imageSize, boolean plms) {}
 ```
 
@@ -84,7 +84,7 @@ common interface.
 
 ```java
 interface EngineParameter {}
-record DalleEngineParameter(ImageSize imageSize) implements EngineParameter {}
+record DalleEngineParameter() implements EngineParameter {}
 record SDEngineParameter(ImageSize imageSize, boolean plms) implements EngineParameter {}
 ```
 
@@ -132,6 +132,8 @@ In Java, this is done with the keyword `sealed` and the clause `permits`
 that lists all subtypes
 ```java
 sealed interface EngineParameter permits DalleEngineParameter, SDEngineParameter {}
+record DalleEngineParameter() implements EngineParameter {}
+record SDEngineParameter(ImageSize imageSize, boolean plms) implements EngineParameter {}
 ```
 
 Note: if the records and the interface are in the same file, the clause `permits` is
@@ -158,7 +160,7 @@ their types.
 ```java
 static int price(EngineParameter engineParameter) {
   return switch (engineParameter) {
-    case DalleEngineParameter(ImageSize __) -> 1_000;
+    case DalleEngineParameter() -> 1_000;
     case SDEngineParameter(ImageSize size, boolean plms) -> imagePrice(size) + plmsPrice(plms);
   };
 }
@@ -170,7 +172,7 @@ into one giant switch. For that we use an optional guard `when` after the patter
 ```java
 static int price(EngineParameter engineParameter) {
   return switch (engineParameter) {
-    case DalleEngineParameter(ImageSize __) -> 1_000;
+    case DalleEngineParameter() -> 1_000;
     case SDEngineParameter(ImageSize size, boolean plms) when size == small && !plms -> 125;
     case SDEngineParameter(ImageSize size, boolean plms) when size == small -> 150;
     case SDEngineParameter(ImageSize size, boolean plms) when size == medium && !plms -> 400;
@@ -190,7 +192,7 @@ instead to declaring the types explicitly.
 ```java
 static int price(EngineParameter engineParameter) {
   return switch (engineParameter) {
-    case DalleEngineParameter(var __) -> 1_000;
+    case DalleEngineParameter() -> 1_000;
     case SDEngineParameter(var size, var plms) when size == small && !plms -> 125;
     case SDEngineParameter(var size, var plms) when size == small -> 150;
     case SDEngineParameter(var size, var plms) when size == medium && !plms -> 400;
@@ -209,21 +211,26 @@ Conclusion: __DOP = no default in switch + use record patterns to assert the sha
 Goal
 - Share the code between the DALL-E endpoint and the Stable Diffusion endpoint 
 
-We can now, share the code of _dalle_ and _sd_, by creating an `EnginParameter`
-from an `ImageRequest`
+For that, we need a methode `imageToText` that calls the right engines, this requires to tweak
+the `DalleEngineParameter` to take an `ImageSize`as parameter because the Dall-E engine needs
+the image size.
 
-```java
-static EngineParameter parameter(ImageRequest imageRequest) {
-  return switch (imageRequest) {
-    case DalleImageRequest request -> new DalleEngineParameter(request.imageSize());
-    case SDImageRequest request -> new SDEngineParameter(request.imageSize(), request.plms());
-  };
-}
+```
+record DalleEngineParameter(ImageSize imageSize) implements EngineParameter {}
 ```
 
-Obviously, it means that `ImageRequest` is a sealed interface.
+Because the definition of `DalleEngineParameter` has changed, and we have followed the principle of the data oriented
+programming, the compiler indicates that the code of the method `price()` needs to be changed to
 
-We also need a methode `imageToText` that calls the right engines.
+```
+static int price(EngineParameter engineParameter) {
+  return switch (engineParameter) {
+    case DalleEngineParameter(ImageSize __) -> 1_000;
+    ...
+  };
+```
+
+We can now create a method `imageToText` that takes an `EngineParameter` and call the engine.
 
 ```java
 static String imageToText(String text, EngineParameter engineParameter) {
@@ -234,9 +241,30 @@ static String imageToText(String text, EngineParameter engineParameter) {
 }
 ```
 
+The last step is to create a method `parameter` that takes an `ImageRequest` (a common super interface of
+`DalleImageRequest` and `SDImageRequest`) and returns the corresponding `EnginParameter`.
+
+```java
+static EngineParameter parameter(ImageRequest imageRequest) {
+  return switch (imageRequest) {
+    case DalleImageRequest request -> new DalleEngineParameter(request.imageSize());
+    case SDImageRequest request -> new SDEngineParameter(request.imageSize(), request.plms());
+  };
+}
+```
+
+Obviously, `ImageRequest` needs to be declared as a sealed interface, so the switch above is exhaustive.
+
 And to extract the `user` and `text` from both the `ImageRequest`, a simple solution
 is to declare the (virtual) accessors in the interface.
+```java
+sealed interface ImageRequest {
+  String user();
+  String text();
+}
+```
 
+So the common code of the REST endpoints can start with
 ```java
 private ImageResponse createImage(ImageRequest imageRequest) {
   var user = imageRequest.user();
@@ -245,12 +273,14 @@ private ImageResponse createImage(ImageRequest imageRequest) {
 ```
 
 In the future, we want to be able to de-structure an interface like `ImageRequest`
-to be able to write a code like this.
+to be able to write a code like this
 
 ```java
 private ImageResponse createImage(ImageRequest imageRequest) {
   ImageRequest(var user, var text) = imageRequest;
   ...
 ```
+
+to avoid to use abstract methods to access to the common values.
 
 Conclusion: __record is data and pattern matching is computation__

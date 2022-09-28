@@ -34,7 +34,7 @@ public class TextToImageAPI2 {
     var text = imageRequest.text();
     var imageSize = imageRequest.imageSize();
 
-    var parameter = new DalleEngineParameter(imageSize);
+    var parameter = new DalleEngineParameter();
     var price = price(parameter);
 
     var invoice = new Invoice(user, text, price, LocalDateTime.now());

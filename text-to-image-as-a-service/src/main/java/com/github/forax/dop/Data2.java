@@ -18,16 +18,6 @@ public interface Data2 {
     }
   }
 
-  record DalleImageRequest(String user, String text, ImageSize imageSize) {}
-  record SDImageRequest(String user, String text, ImageSize imageSize, boolean plms) {}
-  record ImageResponse(String imagePath) {}
-
-  record InvoiceResponse(String userName, String message, int price, LocalDateTime dateTime) {}
-
-  interface EngineParameter {}
-  record DalleEngineParameter(ImageSize imageSize) implements EngineParameter {}
-  record SDEngineParameter(ImageSize imageSize, boolean plms) implements EngineParameter {}
-
   private static int imagePrice(ImageSize size) {
     return switch(size) {
       case small -> 125;
@@ -38,6 +28,18 @@ public interface Data2 {
   private static int plmsPrice(boolean plms) {
     return plms? 25: 0;
   }
+
+
+  record DalleImageRequest(String user, String text, ImageSize imageSize) {}
+  record SDImageRequest(String user, String text, ImageSize imageSize, boolean plms) {}
+  record ImageResponse(String imagePath) {}
+
+  record InvoiceResponse(String userName, String message, int price, LocalDateTime dateTime) {}
+
+  interface EngineParameter {}
+  record DalleEngineParameter() implements EngineParameter {}
+  record SDEngineParameter(ImageSize imageSize, boolean plms) implements EngineParameter {}
+
 
   static int price(EngineParameter engineParameter) {
     return switch (engineParameter) {

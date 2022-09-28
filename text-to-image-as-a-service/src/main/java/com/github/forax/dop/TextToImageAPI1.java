@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-//@RestController // uncomment and comment the RestController annotation of the other TextToImageAPI?
+@RestController // uncomment and comment the RestController annotation of the other TextToImageAPI?
 @RequestMapping("/api")
 public class TextToImageAPI1 {
   private final InvoiceRepository invoiceRepository;
@@ -35,7 +35,7 @@ public class TextToImageAPI1 {
     var text = imageRequest.text();
     var imageSize = imageRequest.imageSize();
 
-    var price = 1_000;
+    var price = Data1.dallePrice();
 
     var invoice = new Invoice(user, text, price, LocalDateTime.now());
     invoiceRepository.save(invoice);
@@ -43,17 +43,6 @@ public class TextToImageAPI1 {
     var imagePath = Engines.dall_e(text, imageSize.size(), imageSize.size());
 
     return new ImageResponse(imagePath);
-  }
-
-  private static int imagePrice(ImageSize size) {
-    return switch(size) {
-      case small -> 125;
-      case medium -> 400;
-      case big -> 800;
-    };
-  }
-  private static int plmsPrice(boolean plms) {
-    return plms? 25: 0;
   }
 
   @PostMapping(path="/sd", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
@@ -65,7 +54,7 @@ public class TextToImageAPI1 {
     var imageSize = imageRequest.imageSize();
     var plms = imageRequest.plms();
 
-    var price = imagePrice(imageSize) + plmsPrice(plms);
+    var price = Data1.sdPrice(imageSize, plms);
 
     var invoice = new Invoice(user, text, price, LocalDateTime.now());
     invoiceRepository.save(invoice);
