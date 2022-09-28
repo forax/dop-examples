@@ -258,7 +258,7 @@ Obviously, `ImageRequest` needs to be declared as a sealed interface, so the swi
 And to extract the `user` and `text` from both the `ImageRequest`, a simple solution
 is to declare the (virtual) accessors in the interface.
 ```java
-sealed interface ImageRequest {
+sealed interface ImageRequest permits DalleImageRequest, SDImageRequest, {
   String user();
   String text();
 }
