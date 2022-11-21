@@ -12,6 +12,7 @@
     <modules>
         <module>text-to-image-as-a-service</module>
         <module>text-to-image-as-a-service-virtual-thread</module>
+        <module>simple</module>
     </modules>
 
     <properties>

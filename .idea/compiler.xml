@@ -7,14 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="text-to-image-as-a-service" />
+        <module name="simple" />
         <module name="text-to-image-as-a-service-virtual-thread" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="dop-examples" target="1.5" />
-      <module name="text-to-image-as-a-service" target="19" />
-      <module name="text-to-image-as-a-service-virtual-thread" target="19" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
