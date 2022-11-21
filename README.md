@@ -1,5 +1,9 @@
-# dop-examples
+# Data Oriented Programming Examples
 Data Oriented Programming Examples using Java 19
+
+- [Simple](simple) 
+
+  A collections of examples showing how to use pattern matching
 
 - [Text to Image as a Service](text-to-image-as-a-service/README.md)
 
