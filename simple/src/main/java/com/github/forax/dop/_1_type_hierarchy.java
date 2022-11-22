@@ -16,5 +16,7 @@ public interface _1_type_hierarchy {
 
     System.out.println(v1.price());
     System.out.println(v2.price());
+
+    System.out.println(((Vehicle) null).price());
   }
 }
