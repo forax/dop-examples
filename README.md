@@ -1,9 +1,9 @@
 # Data Oriented Programming Examples
 Data Oriented Programming Examples using Java 19
 
-- [Simple](simple) 
+- [Data First](data-first) 
 
-  A collections of examples showing how to use pattern matching
+  A collections of examples showing how to program using data oriented programming
 
 - [Text to Image as a Service](text-to-image-as-a-service/README.md)
 
@@ -14,8 +14,13 @@ Data Oriented Programming Examples using Java 19
   A SpringBoot application using Spring 6, SpringBoot 3 and the virtual threads of Java 19
 
 
-  Example used for my ParisJUG presentation (27 Sept. 2022)
-  https://www.parisjug.org/xwiki/wiki/oldversion/view/Meeting/20220927
+  Examples used for
+  - my presentation at ParisJUG (27 Sept. 2022)
+    [data oriented programming.pdf](data%20first%20programming.pdf)
+  - my presentation at NantesJUG (13 Dec. 2022)
+    [data first programming.pdf](data%20first%20programming.pdf)
+
+  
 
   
 
