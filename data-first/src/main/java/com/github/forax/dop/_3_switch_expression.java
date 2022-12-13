@@ -20,5 +20,7 @@ public interface _3_switch_expression {
 
     System.out.println(price(v1));
     System.out.println(price(v2));
+
+    System.out.println(price(null));
   }
 }

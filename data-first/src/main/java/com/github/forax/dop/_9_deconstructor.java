@@ -37,9 +37,10 @@ public interface _9_deconstructor {
 
   static int price(Vehicle vehicle) {
     return switch (vehicle) {
+      // case Car(var seats) -> 10 * seats;
       case Car car when car.deconstructor() instanceof Car.$Result(var seats) -> 10 * seats;
+      case Car car -> throw new MatchException("Car deconstructor does not match", null);
       case TowTruck(var towed) -> 20 + price(towed);
-      default -> throw new AssertionError();
     };
   }
 

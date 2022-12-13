@@ -1,10 +1,9 @@
 package com.github.forax.dop;
 
-import com.github.forax.dop.db.Invoice;
-import com.github.forax.dop.db.InvoiceRepository;
-
 import com.github.forax.dop.Data1.*;
 
+import com.github.forax.dop.db.Invoice;
+import com.github.forax.dop.db.InvoiceRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
