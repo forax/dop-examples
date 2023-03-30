@@ -9,7 +9,7 @@ public interface _8_instanceof_group {
     if (vehicle instanceof Car(var seats)) {
       return 10 * seats;
     }
-    if (vehicle instanceof TowTruck(var towed) towTruck) {
+    if (vehicle instanceof TowTruck(var towed)) {
       return 20 + price(towed);
     }
     throw new AssertionError("oops");
