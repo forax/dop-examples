@@ -3,22 +3,9 @@ package com.github.forax.dop;
 import java.util.List;
 import java.util.Objects;
 
-public interface _2_shape_instanceof {
+public interface _0_shape_poo {
   interface Shape {
-  }
-
-  static double surface(Shape shape) {
-    if (shape instanceof Circle) {
-      var circle = (Circle) shape;
-      return Math.PI * circle.radius() * circle.radius();
-    }
-    if (shape instanceof Box) {
-      var box = (Box) shape;
-      return box.shapes().stream()
-          .mapToDouble(s -> surface(s))
-          .sum();
-    }
-    throw new AssertionError();
+    double surface();
   }
 
   final class Circle implements Shape {
@@ -40,6 +27,14 @@ public interface _2_shape_instanceof {
     @Override
     public int hashCode() {
       return Objects.hash(radius);
+    }
+
+    @Override
+    public double surface() {
+      if (radius < 0) {
+        throw new AssertionError("danger danger");
+      }
+      return Math.PI * radius * radius;
     }
   }
 
@@ -67,13 +62,18 @@ public interface _2_shape_instanceof {
     public int hashCode() {
       return shapes.hashCode();
     }
+
+    @Override
+    public double surface() {
+      return shapes.stream().mapToDouble(Shape::surface).sum();
+    }
   }
 
   static void main(String[] args){
     Shape shape1 = new Circle(10);
     Shape shape2 = new Box(List.of(new Circle(10)));
 
-    System.out.println("shape1.surface: " + surface(shape1));
-    System.out.println("shape2.surface: " + surface(shape2));
+    System.out.println("shape1.surface: " + shape1.surface());
+    System.out.println("shape2.surface: " + shape2.surface());
   }
 }

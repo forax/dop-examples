@@ -4,16 +4,17 @@ import java.util.List;
 import java.util.Objects;
 
 public interface _6_shape_sealed {
-  sealed interface Shape /*permits Circle, Box*/ {
-  }
+  sealed interface Shape /*permits Circle, Box*/ { }
 
   static double surface(Shape shape) {
     return switch(shape) {
+      case Circle circle when circle.radius() < 0 ->
+          throw new AssertionError("danger danger");
       case Circle circle -> Math.PI * circle.radius() * circle.radius();
       case Box box->
-        box.shapes().stream()
-            .mapToDouble(s -> surface(s))
-            .sum();
+          box.shapes().stream()
+              .mapToDouble(s -> surface(s))
+              .sum();
     };
   }
 

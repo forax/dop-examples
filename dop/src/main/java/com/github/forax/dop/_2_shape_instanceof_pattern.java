@@ -3,12 +3,15 @@ package com.github.forax.dop;
 import java.util.List;
 import java.util.Objects;
 
-public interface _3_shape_instanceof_pattern {
+public interface _2_shape_instanceof_pattern {
   interface Shape {
   }
 
   static double surface(Shape shape) {
     if (shape instanceof Circle circle) {
+      if (circle.radius() < 0) {
+        throw new AssertionError("danger danger");
+      }
       return Math.PI * circle.radius() * circle.radius();
     }
     if (shape instanceof Box box) {

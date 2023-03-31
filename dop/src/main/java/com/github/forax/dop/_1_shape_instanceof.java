@@ -3,21 +3,25 @@ package com.github.forax.dop;
 import java.util.List;
 import java.util.Objects;
 
-public interface _5_shape_switch_expression {
+public interface _1_shape_instanceof {
   interface Shape {
   }
 
   static double surface(Shape shape) {
-    return switch(shape) {
-      case Circle circle when circle.radius() < 0 ->
-          throw new AssertionError("danger danger");
-      case Circle circle -> Math.PI * circle.radius() * circle.radius();
-      case Box box->
-          box.shapes().stream()
-              .mapToDouble(s -> surface(s))
-              .sum();
-      default -> throw new AssertionError();
-    };
+    if (shape instanceof Circle) {
+      var circle = (Circle) shape;
+      if (circle.radius() < 0) {
+        throw new AssertionError("danger danger");
+      }
+      return Math.PI * circle.radius() * circle.radius();
+    }
+    if (shape instanceof Box) {
+      var box = (Box) shape;
+      return box.shapes().stream()
+          .mapToDouble(s -> surface(s))
+          .sum();
+    }
+    throw new AssertionError();
   }
 
   final class Circle implements Shape {
@@ -29,8 +33,11 @@ public interface _5_shape_switch_expression {
 
     @Override
     public boolean equals(Object other ) {
-      return other instanceof Circle circle &&
-          radius == circle.radius;
+      if (other instanceof Circle) {
+        Circle circle = (Circle) other;
+        return radius == circle.radius;
+      }
+      return false;
     }
 
     @Override
@@ -52,8 +59,11 @@ public interface _5_shape_switch_expression {
 
     @Override
     public boolean equals(Object other ) {
-      return other instanceof Box box &&
-          shapes.equals(box.shapes);
+      if (other instanceof Box) {
+        Box box = (Box) other;
+        return shapes.equals(box.shapes);
+      }
+      return false;
     }
 
     @Override

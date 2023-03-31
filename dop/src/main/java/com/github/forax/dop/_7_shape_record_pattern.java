@@ -3,11 +3,12 @@ package com.github.forax.dop;
 import java.util.List;
 
 public interface _7_shape_record_pattern {
-  sealed interface Shape /*permits Circle, Box*/ {
-  }
+  sealed interface Shape /*permits Circle, Box*/ { }
 
   static double surface(Shape shape) {
     return switch(shape) {
+      case Circle(int radius) when radius < 0 ->
+          throw new AssertionError("danger danger");
       case Circle(int radius) -> Math.PI * radius * radius;
       case Box(List<Shape> shapes) ->
           shapes.stream()

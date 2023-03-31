@@ -3,14 +3,17 @@ package com.github.forax.dop;
 import java.util.List;
 import java.util.Objects;
 
-public interface _4_shape_switch {
+public interface _4_shape_switch_when {
   interface Shape {
   }
 
   static double surface(Shape shape) {
     double surface;
     switch(shape) {
-      case Circle circle -> surface = Math.PI * circle.radius() * circle.radius();
+      case Circle circle when circle.radius() < 0 ->
+          throw new AssertionError("danger danger");
+      case Circle circle ->
+        surface = Math.PI * circle.radius() * circle.radius();
       case Box box->
         surface = box.shapes().stream()
             .mapToDouble(s -> surface(s))
