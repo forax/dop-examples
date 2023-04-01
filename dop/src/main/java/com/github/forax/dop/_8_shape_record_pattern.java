@@ -2,7 +2,7 @@ package com.github.forax.dop;
 
 import java.util.List;
 
-public interface _7_shape_record_pattern {
+public interface _8_shape_record_pattern {
   sealed interface Shape /*permits Circle, Box*/ { }
 
   static double surface(Shape shape) {

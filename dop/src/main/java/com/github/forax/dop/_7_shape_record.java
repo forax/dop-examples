@@ -2,27 +2,31 @@ package com.github.forax.dop;
 
 import java.util.List;
 
-public interface _8_shape_compact_constructor {
+public interface _7_shape_record {
   sealed interface Shape /*permits Circle, Box*/ { }
 
   static double surface(Shape shape) {
     return switch(shape) {
-      case Circle(int radius) when radius < 0 ->
+      case Circle circle when circle.radius() < 0 ->
           throw new AssertionError("danger danger");
-      case Circle(int radius) -> Math.PI * radius * radius;
-      case Box(List<Shape> shapes) ->
-          shapes.stream()
-            .mapToDouble(s -> surface(s))
-            .sum();
+      case Circle circle ->
+          Math.PI * circle.radius() * circle.radius();
+      case Box box->
+          box.shapes().stream()
+              .mapToDouble(s -> surface(s))
+              .sum();
     };
   }
 
   record Circle(int radius) implements Shape { }
 
   record Box(List<Shape> shapes) implements Shape {
-      public Box {
-        shapes = List.copyOf(shapes);
-      }
+    //public Box(List<Shape> shapes) {
+    //  this.shapes = List.copyOf(shapes);
+    //}
+    public Box {
+      shapes = List.copyOf(shapes);
+    }
   }
 
   static void main(String[] args){
