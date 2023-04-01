@@ -3,7 +3,7 @@ package com.github.forax.dop;
 import java.util.List;
 import java.util.Objects;
 
-public interface _0_shape_poo {
+public interface _0_shape_oop {
   interface Shape {
     double surface();
   }
