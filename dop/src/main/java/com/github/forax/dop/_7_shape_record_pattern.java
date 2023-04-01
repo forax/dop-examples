@@ -9,7 +9,8 @@ public interface _7_shape_record_pattern {
     return switch(shape) {
       case Circle(int radius) when radius < 0 ->
           throw new AssertionError("danger danger");
-      case Circle(int radius) -> Math.PI * radius * radius;
+      case Circle(int radius) ->
+          Math.PI * radius * radius;
       case Box(List<Shape> shapes) ->
           shapes.stream()
             .mapToDouble(s -> surface(s))

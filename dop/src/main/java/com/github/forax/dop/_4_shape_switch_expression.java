@@ -3,24 +3,23 @@ package com.github.forax.dop;
 import java.util.List;
 import java.util.Objects;
 
-public interface _4_shape_switch_when {
-  interface Shape {
+public interface _4_shape_switch_expression {
+  sealed interface Shape permits Circle, Box {
   }
 
   static double surface(Shape shape) {
-    double surface;
-    switch(shape) {
-      case Circle circle when circle.radius() < 0 ->
+    return switch(shape) {
+      case Circle circle -> {
+        if (circle.radius() <  0) {
           throw new AssertionError("danger danger");
-      case Circle circle ->
-        surface = Math.PI * circle.radius() * circle.radius();
+        }
+        yield Math.PI * circle.radius() * circle.radius();
+      }
       case Box box->
-        surface = box.shapes().stream()
-            .mapToDouble(s -> surface(s))
-            .sum();
-      default -> throw new AssertionError();
-    }
-    return surface;
+          box.shapes().stream()
+              .mapToDouble(s -> surface(s))
+              .sum();
+    };
   }
 
   final class Circle implements Shape {

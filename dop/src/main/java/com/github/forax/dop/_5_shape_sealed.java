@@ -3,14 +3,17 @@ package com.github.forax.dop;
 import java.util.List;
 import java.util.Objects;
 
-public interface _6_shape_sealed {
+public interface _5_shape_sealed {
   sealed interface Shape /*permits Circle, Box*/ { }
 
   static double surface(Shape shape) {
     return switch(shape) {
-      case Circle circle when circle.radius() < 0 ->
+      case Circle circle -> {
+        if (circle.radius() <  0) {
           throw new AssertionError("danger danger");
-      case Circle circle -> Math.PI * circle.radius() * circle.radius();
+        }
+        yield Math.PI * circle.radius() * circle.radius();
+      }
       case Box box->
           box.shapes().stream()
               .mapToDouble(s -> surface(s))

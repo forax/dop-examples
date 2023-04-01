@@ -3,20 +3,19 @@ package com.github.forax.dop;
 import java.util.List;
 import java.util.Objects;
 
-public interface _5_shape_switch_expression {
-  interface Shape {
-  }
+public interface _6_shape_switch_when {
+  sealed interface Shape /*permits Circle, Box*/ { }
 
   static double surface(Shape shape) {
     return switch(shape) {
       case Circle circle when circle.radius() < 0 ->
           throw new AssertionError("danger danger");
-      case Circle circle -> Math.PI * circle.radius() * circle.radius();
+      case Circle circle ->
+          Math.PI * circle.radius() * circle.radius();
       case Box box->
           box.shapes().stream()
               .mapToDouble(s -> surface(s))
               .sum();
-      default -> throw new AssertionError();
     };
   }
 
